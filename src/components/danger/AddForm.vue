@@ -4,12 +4,20 @@ import { onMounted, ref, useTemplateRef } from 'vue';
 import { loggedUser } from '@/states/loggedUser';
 
 let category = ref();
-let shortDescription = ref();
+let shortDescription = useTemplateRef('shortDescription')
 var addDangerMap;
 var handleSubmit;
 
 var form = useTemplateRef('form')
 var formCompleted = ref(false)
+
+function shortDescriptionValidation() {
+  if(shortDescription.value.value.length < 10) {
+    shortDescription.value.setCustomValidity('invalid')
+  } else {
+    shortDescription.value.setCustomValidity('')
+  }
+}
 
 onMounted(() => {
   formValidation();
@@ -33,7 +41,7 @@ onMounted(() => {
           },
         body: JSON.stringify({
           category: category.value,
-          shortDescription: shortDescription.value,
+          shortDescription: shortDescription.value.value,
           coordinates: [addDangerMap.getCenter().lat, addDangerMap.getCenter().lng],
           status: 'waiting-approval',
           userID: loggedUser._id,
@@ -57,7 +65,7 @@ onMounted(() => {
     </div>
     <form v-else ref="form" class="needs-validation" @submit.prevent="handleSubmit()" novalidate="novalidate">
       <div class="my-4">
-          <label class="form-label" for="category">Categoria</label>
+          <label class="form-label" for="category">Tipo</label>
           <select class="form-select" v-model="category" name="category" required="required">
             <option selected="selected" disabled="disabled" value="">Scegli...</option>
             <option value="animale-pericoloso">Animale pericoloso</option>
@@ -65,11 +73,11 @@ onMounted(() => {
             <option value="sentiero-inagibile">Sentiero inagibile </option>
             <option value="altro">Altro</option>
           </select>
-          <div class="invalid-feedback">Inserisci una categoria</div>
+          <div class="invalid-feedback">Inserisci un tipo</div>
       </div>
       <div class="my-4">
         <label class="form-label" for="shortDescription">Breve descrizione</label>
-        <textarea class="form-control" type="text" v-model="shortDescription" name="shortDescription" minlenght="10" required="required"></textarea>
+        <textarea ref='shortDescription' class="form-control" type="text" name="shortDescription" @input="shortDescriptionValidation()" required="required"></textarea>
         <div class="invalid-feedback">La descrizione deve essere lunga almeno 10 caratteri</div>
       </div>
       <div class="my-4"><label class="form-label">Posizione</label>
