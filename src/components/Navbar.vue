@@ -21,7 +21,7 @@ function logout() {
     <div class="container-fluid">
       <RouterLink class="navbar-brand navbar-brand-text d-flex align-items-center" to="/">
         <img id="logo" src="@/assets/alert.svg" />
-        <h3 class="m-0" id="brand">WarneTalkie</h3>
+        <h3 class="m-0" id="brand">WarnieTalkie</h3>
       </RouterLink>
       <button
         class="navbar-toggler"
