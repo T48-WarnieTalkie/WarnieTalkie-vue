@@ -16,7 +16,7 @@ let registered = ref(false)
 
 function confirmPasswordValidation() {
   if(password.value.value != confirmPassword.value.value) {
-    confirmPassword.value.setCustomValidity(' ')
+    confirmPassword.value.setCustomValidity('invalid')
   } else {
     confirmPassword.value.setCustomValidity('')
   }
