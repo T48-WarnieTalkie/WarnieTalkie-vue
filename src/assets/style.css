@@ -1,0 +1,4 @@
+.underlined {
+  border-bottom: 1.5px dashed #999;
+  display: inline;
+}
