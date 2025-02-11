@@ -4,6 +4,7 @@ import formValidation from '@/utility/form-validation';
 import {setLoggedUser} from '@/states/loggedUser'
 import router from '@/router';
 import {Modal} from 'bootstrap'
+import { bus } from 'vue3-eventbus';
 
 const $cookies = inject('$cookies')
 
@@ -64,6 +65,7 @@ onMounted(() => {
       <div class="my-4">
         <label class="form-label" for="password">Password</label>
         <input class="form-control" type="password" id="password" v-model="password" required="required" />
+        <button class="btn btn-link p-0 text-body" type="button" style="font-size: 14px;" @click="bus.emit('notImplementedEvent')">Hai dimenticato la password?</button>
         <div class="invalid-feedback">Inserisci una password</div>
       </div>
       <div class="my-4">
