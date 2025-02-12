@@ -2,8 +2,11 @@
 import { onMounted } from 'vue'
 import { categoryToString, timeDistance } from '@/utility/utils';
 import L from 'leaflet'
+import router from '@/router';
 import.meta.env.VITE_API_ENDPOINT
+
 onMounted(() => {
+  
   const homeMap = L.map('homeMap');
 
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -35,12 +38,16 @@ onMounted(() => {
     dangers.forEach((d) => {
       var marker = L.marker([d.coordinates[0], d.coordinates[1]]).addTo(homeMap);
       marker.bindPopup(`
-        <a href="/danger/${d._id}">
+        <button class="btn btn-link text-info p-0" data-dangerid="${d._id}" onclick="onLinkClick(this)">
           <h5 class="m-0">${categoryToString(d.category)}</h5>  
-        </a>
+        </button>
+        <br>
         <span>inviata ${timeDistance(d.sendTimestamp)} fa</span>
       `);
     });
+    window.onLinkClick = (button) => {
+      router.push({name: 'visualizeDanger', params: {dangerId: button.dataset.dangerid}})  
+    }
   })
 })
 
