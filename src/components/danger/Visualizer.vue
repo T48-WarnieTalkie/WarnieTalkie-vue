@@ -7,6 +7,14 @@ import { bus } from 'vue3-eventbus';
 import { isLogged, loggedUser } from '@/states/loggedUser';
 import UserActionButtons from './UserActionButtons.vue';
 import router from '@/router';
+import {Icon} from 'leaflet'
+
+const marker = new Icon({
+  iconUrl: '/marker-icon.png',
+  shadowUrl: '/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41]
+})
 
 const props = defineProps({
   dangerId: String
@@ -34,7 +42,7 @@ onMounted(() => {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(visualizeDangerMap);
 
-  L.marker([danger.value.coordinates[0], danger.value.coordinates[1]]).addTo(visualizeDangerMap)
+  L.marker([danger.value.coordinates[0], danger.value.coordinates[1]], {icon: marker}).addTo(visualizeDangerMap)
 
   visualizeDangerMap.setView([danger.value.coordinates[0], danger.value.coordinates[1]], 12);
 })
