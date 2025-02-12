@@ -32,8 +32,12 @@ onMounted(() => {
   })
   .then((resp) => resp.json())
   .then((dangers) => {
+    var redMarker = L.icon({
+      iconUrl: '@/assets/marker-icon.png',
+      iconSize: [50, 82]
+    })
     dangers.forEach((d) => {
-      var marker = L.marker([d.coordinates[0], d.coordinates[1]]).addTo(homeMap);
+      var marker = L.marker([d.coordinates[0], d.coordinates[1]], {icon: redMarker}).addTo(homeMap);
       marker.bindPopup(`
         <a href="/danger/${d._id}">
           <h5 class="m-0">${categoryToString(d.category)}</h5>  
