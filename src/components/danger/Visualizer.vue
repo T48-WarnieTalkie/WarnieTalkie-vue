@@ -56,13 +56,16 @@ bus.on('modActionEnd', (e) => fetchDanger())
         <div id="visualizeDangerCarousel" class="carousel slide bg-body-secondary">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img class="carousel-img" src="@/assets/sample-danger-photo_1.jpg">
+              <img class="carousel-img" src="@/assets/sample-danger-photo_1.png">
             </div>
             <div class="carousel-item">
               <img class="carousel-img" src="@/assets/sample-danger-photo_2.jpg">
             </div>
             <div class="carousel-item">
-              <img class="carousel-img" src="@/assets/sample-danger-photo_3.jpg">
+              <img class="carousel-img" src="@/assets/sample-danger-photo_3.png">
+            </div>
+            <div class="carousel-item">
+              <img class="carousel-img" src="@/assets/sample-danger-photo_4.png">
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#visualizeDangerCarousel" data-bs-slide="prev">
