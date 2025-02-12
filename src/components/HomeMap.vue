@@ -33,7 +33,7 @@ onMounted(() => {
   .then((resp) => resp.json())
   .then((dangers) => {
     var redMarker = L.icon({
-      iconUrl: '@/assets/marker-icon.png',
+      iconUrl: '/marker-icon.png',
       iconSize: [50, 82]
     })
     dangers.forEach((d) => {
