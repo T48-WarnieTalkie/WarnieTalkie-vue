@@ -26,8 +26,7 @@ onMounted(() => {
     var indexMap_lastCenter = JSON.parse(indexMap_lastCenter_json);
     homeMap.setView([indexMap_lastCenter.lat, indexMap_lastCenter.lng], localStorage.getItem("indexMap_lastZoom"));
   } else {
-    //povo
-    homeMap.setView([46.064638, 11.150307], 16);
+    homeMap.setView([46.080732665095894, 11.12477822089746], 13);
   }
 
   fetch(import.meta.env.VITE_API_ENDPOINT + "/dangers/?status=approved", {
