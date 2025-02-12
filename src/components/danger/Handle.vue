@@ -31,7 +31,7 @@ bus.on('modActionEnd', (e) => fetchDangers())
 </script>
 
 <template>
-  <div class="tab-content mx-auto container-sm my-4" style="max-width: 1000px">
+  <div class="tab-content mx-auto container-sm py-4" style="max-width: 1000px">
     <div class="tab-pane show active" id="waitingApproval-pane" role="tabpanel" tabindex="0">
       <List v-if="waitingApproval.length>0" :dangers="waitingApproval" :buttons="ModActionButtons"/>
       <EmptyList v-else subheader="Non hai più segnalazioni da valutare (rilassati!)"/>

@@ -24,7 +24,7 @@ bus.on('userActionEnd', (e) => fetchDangers())
 </script>
 
 <template>
-  <div class="tab-content mx-auto container-sm my-4" style="max-width: 1000px">
+  <div class="tab-content mx-auto container-sm py-4" style="max-width: 1000px">
     <List v-if="dangers.length > 0" :dangers="dangers" :buttons="UserActionButtons" />
     <EmptyList v-else subheader="Aggiungi una segnalazione per iniziare" />
   </div>
