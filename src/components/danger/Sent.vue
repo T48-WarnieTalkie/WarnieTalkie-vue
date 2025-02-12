@@ -9,7 +9,7 @@ import { bus } from 'vue3-eventbus'
 let dangers = ref([])
 
 async function fetchDangers() {
-  await fetch(import.meta.env.VITE_API_ENDPOINT + '/dangers/?sentBy=' + loggedUser._id, {
+  await fetch(import.meta.env.VITE_API_ENDPOINT + '/dangers/?userID=' + loggedUser._id, {
     method: 'GET'
   })
   .then((resp) => resp.json())
