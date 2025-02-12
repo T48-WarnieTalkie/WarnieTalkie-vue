@@ -1,9 +1,10 @@
 <script setup>
 import formValidation from '@/utility/form-validation';
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, useTemplateRef } from 'vue'
 import { loggedUser } from '@/states/loggedUser';
 
 import { bus } from 'vue3-eventbus';
+import { Modal } from 'bootstrap';
 
 const props = defineProps({
   danger: Object
@@ -12,6 +13,15 @@ const props = defineProps({
 let expiration = ref()
 let newExpiration = ref()
 let handleApprove, handleReject, handleModifyExpiration, handleTerminate;
+let approveModal = useTemplateRef('approveModal')
+let rejectModal = useTemplateRef('rejectModal')
+let modifyExpirationModal = useTemplateRef('modifyExpirationModal')
+let terminateModal = useTemplateRef('terminateModal')
+
+const openApproveModal = () => {new Modal(approveModal.value).show()}
+const openRejectModal = () => {new Modal(rejectModal.value).show()}
+const openModifyExpirationModal = () => {new Modal(modifyExpirationModal.value).show()}
+const openTerminateModal = () => {new Modal(terminateModal.value).show()}
 
 onMounted(() => {
   formValidation()
@@ -30,10 +40,11 @@ onMounted(() => {
     }).then(() => {
       bus.emit('modActionEnd', {action: "approve"})
     })
+    
   }
 
   handleReject = () => {
-    fetch(import.meta.env.VITE_API_ENDPOINT + "/danger/" + props.danger._id, {
+    fetch(import.meta.env.VITE_API_ENDPOINT + "/dangers/" + props.danger._id, {
       method: "PATCH",
       headers: {
         Authorization: 'Bearer ' + loggedUser.token,
@@ -45,6 +56,7 @@ onMounted(() => {
     }).then(() => {
       bus.emit('modActionEnd', {action: "reject"})
     })
+    
   }
 
   handleModifyExpiration = () => {
@@ -60,6 +72,7 @@ onMounted(() => {
     }).then(() => {
       bus.emit('modActionEnd', {action: "modifyExpiration"})
     })
+    
   }
 
   handleTerminate = () => {
@@ -76,6 +89,7 @@ onMounted(() => {
     }).then(() => {
       bus.emit('modActionEnd', {action: "terminate"})
     })
+    
   }
 })
 
@@ -83,9 +97,9 @@ onMounted(() => {
 
 <template>
   <div v-if="danger.status=='waiting-approval'" class="d-flex gap-2">
-    <button class="btn btn-link p-0 text-success" data-bs-toggle="modal" data-bs-target="#approveModal">Approva</button>
+    <button class="btn btn-link p-0 text-success" @click="openApproveModal()">Approva</button>
     
-    <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
+    <div ref='approveModal' class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -107,9 +121,9 @@ onMounted(() => {
     </div>
 
     <div class="vr"></div>
-    <button class="btn btn-link p-0 text-danger" data-bs-toggle="modal" data-bs-target="#rejectModal">Rifiuta</button>
+    <button class="btn btn-link p-0 text-danger" @click="openRejectModal()">Rifiuta</button>
 
-    <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+    <div ref="rejectModal" class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -128,9 +142,9 @@ onMounted(() => {
 
   </div>
   <div v-if="danger.status=='approved'" class="d-flex gap-2">
-    <button class="btn btn-link p-0 text-primary" data-bs-toggle="modal" data-bs-target="#modifyExpirationModal">Modifica scadenza</button>
+    <button class="btn btn-link p-0 text-primary" @click="openModifyExpirationModal()">Modifica scadenza</button>
 
-    <div class="modal fade" id="modifyExpirationModal" tabindex="-1" aria-labelledby="modifyExpirationModalLabel" aria-hidden="true">
+    <div ref="modifyExpirationModal" class="modal fade" id="modifyExpirationModal" tabindex="-1" aria-labelledby="modifyExpirationModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -145,16 +159,16 @@ onMounted(() => {
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="handleModifyExpiration" data-bs-dismiss="modal">Modifica</button>
+            <button type="button" class="btn btn-primary" @click="handleModifyExpiration()" data-bs-dismiss="modal">Modifica</button>
           </div>
         </div>
       </div>
     </div>
 
     <div class="vr"></div>
-    <button class="btn btn-link p-0 text-danger" data-bs-toggle="modal" data-bs-target="#terminateModal">Termina</button>
+    <button class="btn btn-link p-0 text-danger" @click="openTerminateModal()">Termina</button>
 
-    <div class="modal fade" id="terminateModal" tabindex="-1" aria-labelledby="terminateModalLabel" aria-hidden="true">
+    <div ref="terminateModal" class="modal fade" id="terminateModal" tabindex="-1" aria-labelledby="terminateModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -165,7 +179,7 @@ onMounted(() => {
             Sei sicuro di voler terminare la segnalazione?
           </div>
           <div class="modal-footer">
-            <button type="button" @click="handleTerminate" class="btn btn-danger" data-bs-dismiss="modal">Si, termina</button>
+            <button type="button" @click="handleTerminate()" class="btn btn-danger" data-bs-dismiss="modal">Si, termina</button>
           </div>
         </div>
       </div>
