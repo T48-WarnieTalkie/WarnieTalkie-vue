@@ -102,7 +102,7 @@ bus.on('modActionEnd', (e) => fetchDanger())
         </div>
         <div v-if="isLogged()" class="ms-auto">
           <ModActionButtons v-if="loggedUser.isModerator" :danger="danger"/>
-          <UserActionButtons v-else :danger="danger"></UserActionButtons>
+          <UserActionButtons v-else-if="loggedUser._id==danger.userID" :danger="danger"></UserActionButtons>
         </div>
       </div>
     </div>
